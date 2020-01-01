@@ -17,7 +17,7 @@ if(isset($_POST['strUsername']) && isset($_POST['strPassword'])) {
     $username = $_POST['strUsername'];
     $rawPassword = $_POST['strPassword'];
     if(empty($username) || empty($rawPassword)) {
-
+        // This will tell the user that nothing has been entered.
     } else {
         // Get Salt that is related to the user via the database
         $checkQuery = $database->executeQuery("SELECT Salt from users WHERE Username LIKE '{$username}'");
