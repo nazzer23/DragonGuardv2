@@ -1,0 +1,18 @@
+<?php
+
+class Configuration
+{
+    // Global Options
+    const siteName = "";
+    
+    // Development Mode
+    const devMode = true; // true or false
+    const devDirectory = "/";
+
+    // Database
+    const useDatabase = true; // true or false
+    const dbHost = ""; // if using localhost, use 127.0.0.1
+    const dbUser = "";
+    const dbPass = "";
+    const dbName = "";
+}
