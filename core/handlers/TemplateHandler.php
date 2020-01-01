@@ -17,9 +17,19 @@ class TemplateHandler
             $file = file_get_contents($file);
             return $file;
         } else {
-            return $this->getFile("site.404");
+            return $this->execute404($file);
             //die("The file that was requested ({$file}) cannot be loaded. Please try again later or contact the site administrator.");
         }
+    }
+
+    private function execute404($originalFile) {
+        $this->template = $this->getFile("site.404");
+        if(!Configuration::devMode){
+            $this->setVariable("errorMessage", Configuration::DefaultNotFound);
+        } else {
+            $this->setVariable("errorMessage", "The file that was requested ({$originalFile}) cannot be loaded.");
+        }
+        return $this->getTemplate();
     }
 
     public function appendVariable($variable, $value)

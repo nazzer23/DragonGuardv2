@@ -4,6 +4,9 @@ class Configuration
 {
     // Global Options
     const siteName = "";
+
+    // Error Messages
+    const DefaultNotFound = "Oh No! It would appear, you hit a roadblock.";
     
     // Development Mode
     const devMode = true; // true or false

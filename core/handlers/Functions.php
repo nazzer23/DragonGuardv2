@@ -3,10 +3,14 @@
 class Functions
 {
     private $global;
+    private $database;
 
     public function __construct($global)
     {
         $this->global = $global;
+        if(Configuration::useDatabase) {
+            $this->database = $this->global->db;
+        }
     }
 
     public function urlClean($string)
@@ -25,4 +29,20 @@ class Functions
         }
         return $finalString;
     }
+
+    public function getAllRaces() {
+        $races = array();
+
+        $query = "SELECT * FROM races";
+        $query = $this->database->executeQuery($query);
+
+        while($row = $query->fetch_array()) {
+            $index = sizeof($races);
+            $races[$index]["RaceID"] = $row['id'];
+            $races[$index]["Name"] = $row['RaceName'];
+        }
+
+        return $races;
+
+    }    
 }
