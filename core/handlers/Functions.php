@@ -44,5 +44,9 @@ class Functions
 
         return $races;
 
-    }    
+    }
+
+    public function getExpToLevel($level) {
+        return ;
+    }
 }
