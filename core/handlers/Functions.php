@@ -20,14 +20,15 @@ class Functions
     }
 
     // User Authentication
-    public function encryptPassword($password, $user, $salt)
+    public function encryptPassword($password, $user)
     {
-        $length = (strlen($password.$user) + $salt) / 5;
-        $finalString = $password;
-        for ($i = 0; $i < $length; $i++) {
-            $finalString = base64_encode($finalString);
-        }
+        $finalString = $user . $password;
+        $finalString = password_hash($finalString, PASSWORD_BCRYPT);
         return $finalString;
+    }
+
+    public function verifyPassword($password, $hash) {
+        return password_verify($password, $hash);
     }
 
     public function getAllRaces() {
@@ -46,7 +47,20 @@ class Functions
 
     }
 
-    public function getExpToLevel($level) {
-        return ;
+    public function getUserExpToLevel($level) {
+        $a = Configuration::userLevelSettings["BaseXP"];
+        $b = Configuration::userLevelSettings["XPMultiplier"];
+        $c = Configuration::userLevelSettings["XPDivisor"];
+        $d = Configuration::userLevelSettings["MultiplierInc"];
+
+        $userLevel = (
+            (
+                ($a * $b)
+                *
+                ($level * $d)
+            ) * $level
+        ) / $c;
+
+        return $userLevel;
     }
 }

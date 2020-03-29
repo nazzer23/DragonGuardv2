@@ -20,14 +20,14 @@ if(isset($_POST['strUsername']) && isset($_POST['strPassword'])) {
         // This will tell the user that nothing has been entered.
     } else {
         // Get Salt that is related to the user via the database
-        $checkQuery = $database->executeQuery("SELECT Salt from users WHERE Username LIKE '{$username}'");
+        $checkQuery = $database->executeQuery("SELECT * from users WHERE Username LIKE '{$username}'");
         if($checkQuery->num_rows <= 0) {
             // Account doesn't exist
         } else {
             $possibleUser = $checkQuery->fetch_array();            
             // Then check the password and the password in the database are the same
-            $password = $functions->encryptPassword($rawPassword, $username, $possibleUser['Salt']);
-            if($possibleUser['Hash'] == $password) {
+            $password = $functions->encryptPassword($rawPassword, $username);
+            if($functions->verifyPassword($password, $possibleUser['Hash'])) {
                 // login success
             } else {
                 $possibleUser = null;
