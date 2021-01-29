@@ -1,0 +1,52 @@
+<script>
+    let globalSelection = "";
+    let delay = 500;
+    function filterSelection(selection) {
+        globalSelection = selection;
+        if(selection !== "all") {
+            fadeOutSelection();
+        } else {
+            resetFilter();
+        }
+
+    }
+
+    function fadeOutSelection() {
+        $("#areas").find(`div[id!='area-${globalSelection}'][class='col-md-4']`).fadeOut();
+        $("#areas").find(`div[id='area-${globalSelection}'][class='col-md-4']`).delay(delay).fadeIn();
+    }
+
+    function resetFilter() {
+        $("#areas").find("div[id^='area-'][class='col-md-4']").delay(delay).fadeIn();
+    }
+</script>
+<div class="container">
+    <div class="my-3 p-3 bg-dark rounded box-shadow">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        Travel to different areas!
+                    </div>
+                    <div align="center" id="myBtnContainer">
+                        <button type="button" class="btn btn-warning" onclick="filterSelection('City')">City's</button>
+                        <button type="button" class="btn btn-danger" onclick="filterSelection('Dungeon')">Dungeons
+                        </button>
+                        <button type="button" class="btn btn-info" onclick="filterSelection('Event')">Events</button>
+                        <button type="button" class="btn btn-dark" onclick="filterSelection('Guild')">Guilds</button>
+                        <button type="button" class="btn btn-warning" onclick="filterSelection('Monster')" active>
+                            Monsters
+                        </button>
+                        <button type="button" class="btn btn-light" onclick="filterSelection('all')">Remove</button>
+                    </div>
+                    <div id="notifications">{notifications}</div>
+                    <div class="card-body" id="areas">
+                        <div class="row">
+                            {areas}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

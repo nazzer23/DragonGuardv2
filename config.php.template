@@ -18,4 +18,11 @@ class Configuration
     const dbUser = "";
     const dbPass = "";
     const dbName = "";
+
+    const userLevelSettings = array(
+        "BaseXP" => 100,
+        "XPMultiplier" => 1.75,
+        "XPDivisor" => 4.2,
+        "MultiplierInc" => 2.25
+    );
 }

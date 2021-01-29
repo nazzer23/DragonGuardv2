@@ -6,9 +6,14 @@ class DatabaseHandler
 
     public function __construct()
     {
-        $this->db = new mysqli(Configuration::dbHost, Configuration::dbUser, Configuration::dbPass, Configuration::dbName);
+        $dbCreds = Configuration::getDatabase();
+        $this->db = new mysqli($dbCreds["dbHost"], $dbCreds["dbUser"], $dbCreds["dbPass"], $dbCreds["dbName"]);
         if ($this->db->connect_error) {
-            die("There was an error whilst connecting to the database. Please contact the site administrator.");
+            if(Configuration::devMode) {
+                die($this->db->connect_error);
+            } else {
+                die("There was an error whilst connecting to the database. Please contact the site administrator.");
+            }
         }
     }
 
@@ -19,7 +24,15 @@ class DatabaseHandler
 
     public function executeQuery($query)
     {
-        return $this->db->query($query);
+        $query = $this->db->query($query);
+        if($this->db->error) {
+            if(Configuration::devMode) {
+                die($this->db->error);
+            } else {
+                die("An error has occured. Please inform staff. Error ID: {$this->db->errno}");
+            }
+        }
+        return $query;
     }
 
     public function fetchObject($query)

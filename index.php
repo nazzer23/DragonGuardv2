@@ -13,4 +13,6 @@ $page->setVariable("siteName", Configuration::siteName);
 $mainTemplate->setVariable("pageName", "Home");
 $mainTemplate->setVariable("content", $page->getTemplate());
 
+$currentUser = $functions->getCurrentUser();
+
 $mainTemplate->render();
